@@ -148,7 +148,7 @@ class DecimalFormatEditView : TextInputEditText, View.OnTouchListener {
         // Edit 기본 설정, Edit Action 설정, Filter 설정
         setDefaultDecimalFormatEditView()
         setActionDecimalFormatEditView()
-        setInputFilterDecimalEditView(numberCut, decimalCut, addEditStart)
+        setInputFilterDecimalEditView(numberCut, decimalCut)
 
         // Edit 앞에 붙일 값 설정
         setAddEditStart(addEditStart)
@@ -168,17 +168,15 @@ class DecimalFormatEditView : TextInputEditText, View.OnTouchListener {
                 it != null
             }
             .map {
-                val value = it.toString()
+                val value = it.toString().replace("[^\\d.,]".toRegex(), "")
 
                 when {
-                    value.startsWith(".") ||
-                    value.isEmpty() ||
-                    value == addEditStart -> {
+                    value.startsWith(".") || value.isEmpty() -> {
                         ""
                     }
 
-                    value.length > 1 && value.last().toString() == "." -> {
-                        value
+                    value.isNotEmpty() && value.last().toString() == "." -> {
+                        "${addEditStart}$value"
                     }
 
                     else -> {
@@ -248,13 +246,11 @@ class DecimalFormatEditView : TextInputEditText, View.OnTouchListener {
     fun setInputFilterDecimalEditView(
         numberCut: Int,
         decimalCut: Int,
-        addEditStart: String
     ) {
         this.filters = arrayOf<InputFilter>(
             DecimalFormatFilter(
                 numberCut,
-                decimalCut,
-                addEditStart
+                decimalCut
             )
         )
     }
@@ -348,21 +344,15 @@ class DecimalFormatEditView : TextInputEditText, View.OnTouchListener {
      * , 로 구분
      */
     private fun getCommaFormat(str: String): String {
-        val value = str.replace(",", "")
-            .replace(addEditStart, "")
-            .trim()
+        val value = str.replace("[^\\d.]".toRegex(), "")
 
         return when {
             value.contains(".") -> {
-                val decimal = value.substring(value.lastIndexOf("."))
-                val number = value.replace(decimal, "")
+                val number = value.substring(0, value.indexOf("."))
+                val decimal = value.substring(value.indexOf("."))
 
                 val formatter = NumberFormat.getNumberInstance()
-
-                val numberResult = formatter.format(number.toBigDecimal())
-                val decimalResult = decimal.replace(".", "")
-
-                "$numberResult.$decimalResult"
+                "${formatter.format(number.toBigDecimal())}${decimal}"
             }
 
             else -> {
@@ -400,8 +390,6 @@ class DecimalFormatEditView : TextInputEditText, View.OnTouchListener {
     * 입력 값 가져오기
      */
     fun getFormatText(): String {
-        return this.text.toString().replace(",", "")
-            .replace(addEditStart, "")
-            .trim()
+        return this.text.toString().replace("[^\\d.]".toRegex(), "")
     }
 }

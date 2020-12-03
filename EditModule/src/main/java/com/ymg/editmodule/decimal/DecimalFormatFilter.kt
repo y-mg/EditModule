@@ -9,8 +9,7 @@ import java.util.regex.Pattern
 
 class DecimalFormatFilter(
     numberCut: Int,
-    decimalCut: Int,
-    private val addEditStart: String
+    decimalCut: Int
 ) : InputFilter {
     private var pattern: Pattern = Pattern.compile("[0-9]{0," + (numberCut - 1) + "}+((\\.[0-9]{0," + (decimalCut - 1) + "})?)||(\\.)?")
 
@@ -22,9 +21,7 @@ class DecimalFormatFilter(
         dstart: Int,
         dend: Int
     ): CharSequence? {
-        val check = dest.toString().replace(",", "")
-            .replace(addEditStart, "")
-            .trim()
+        val check = dest.toString().replace("[^\\d.]".toRegex(), "")
 
         SpannedString.valueOf(check)
 
