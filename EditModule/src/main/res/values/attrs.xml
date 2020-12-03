@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Clear Edit -->
+    <declare-styleable name="ClearEditStyle">
+        <attr name="ceClearButtonIcon" format="reference"/>
+    </declare-styleable>
+
+
+
+    <!-- Password Edit -->
+    <declare-styleable name="PasswordEditStyle">
+        <attr name="peClearButtonEnabled" format="boolean"/>
+        <attr name="peClearButtonIcon" format="reference"/>
+        <attr name="pePasswordShowButtonIcon" format="reference"/>
+        <attr name="pePasswordHideButtonIcon" format="reference"/>
+    </declare-styleable>
+
+
+
+    <!-- Date Of Year Edit -->
+    <declare-styleable name="DateOfYearEditStyle">
+        <attr name="doyClearButtonEnabled" format="boolean"/>
+        <attr name="doyClearButtonIcon" format="reference"/>
+    </declare-styleable>
+
+
+
+    <!-- Number Format Edit -->
+    <declare-styleable name="NumberFormatEditStyle">
+        <attr name="nfClearButtonEnabled" format="boolean"/>
+        <attr name="nfClearButtonIcon" format="reference"/>
+        <attr name="nfAddEditStart" format="string"/>
+    </declare-styleable>
+
+
+
+    <!-- Decimal Format Edit -->
+    <declare-styleable name="DecimalFormatEditStyle">
+        <attr name="dfClearButtonEnabled" format="boolean"/>
+        <attr name="dfClearButtonIcon" format="reference"/>
+        <attr name="dfNumberCut" format="integer"/>
+        <attr name="dfDecimalCut" format="integer"/>
+        <attr name="dfAddEditStart" format="string"/>
+    </declare-styleable>
+
+</resources>

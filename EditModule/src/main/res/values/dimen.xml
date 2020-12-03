@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Clear Edit -->
+    <dimen name="clear_edit_default_min_height">50dp</dimen>
+
+
+
+    <!-- Password Edit -->
+    <dimen name="password_edit_default_min_height">50dp</dimen>
+
+
+
+    <!-- Date Of Year Edit -->
+    <dimen name="date_of_year_edit_default_min_height">50dp</dimen>
+
+
+
+    <!-- Number Format Edit -->
+    <dimen name="number_format_edit_default_min_height">50dp</dimen>
+
+
+
+    <!-- Decimal Format Edit -->
+    <dimen name="decimal_format_edit_default_min_height">50dp</dimen>
+
+</resources>

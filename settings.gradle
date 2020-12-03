@@ -1,0 +1,3 @@
+include ':EditModule'
+include ':app'
+rootProject.name = "EditView"
