@@ -83,7 +83,7 @@ class DecimalFormatEditView : TextInputEditText, View.OnTouchListener {
         val numberCut =
             typedArray?.getInteger(
                 R.styleable.DecimalFormatEditStyle_dfNumberCut,
-                30
+                16
             )
 
         // 소수점 자릿수 컷

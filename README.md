@@ -1,4 +1,6 @@
 # EditModule
+<img width="250px" height="500px" src="/sample/clear.gif" /> <img width="250px" height="500px" src="/sample/password.gif" /> <img width="250px" height="500px" src="/sample/date.gif" />
+<img width="250px" height="500px" src="/sample/number.gif" /> <img width="250px" height="500px" src="/sample/decimal.gif" />
 <br/>
 <br/>
 
@@ -64,7 +66,7 @@ It is recommended to apply option "imeOptions".
 
 | Function | Parameter | Description(KO) | Description(EN) |
 |:----------|:----------|:----------|:----------|
-| setAddEditStart(addEditStart: String) | Start String | String to add initially |
+| setAddEditStart(<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addEditStart: String<br/>) | Start String | 앞에 추가할 문자열 | String to add initially |
 | getFormatText() | Void | 숫자 값 가져오기 | Get only number |
 <br/>
 <br/>
@@ -87,10 +89,10 @@ It is recommended to apply option "imeOptions".
 
 ### Kotlin
 
-| Option | Default | Description(KO) | Description(EN) |
+| Function | Parameter | Description(KO) | Description(EN) |
 |:----------|:----------|:----------|:----------|
 | setInputFilterDecimalEditView(<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numberCut: Int,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;decimalCut: Int<br/>) | Integer Digits,<br/>Decimal Digits | 필터 설정 | Filter setting |
-| setAddEditStart(addEditStart: String) | Start String | 앞에 추가할 문자열 | String to add initially |
+| setAddEditStart(<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addEditStart: String<br/>) | Start String | 앞에 추가할 문자열 | String to add initially |
 | getFormatText() | Void | 소수 값 가져오기 | Get only decimal |
 <br/>
 <br/>
