@@ -106,7 +106,7 @@ class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
     private fun setInit(
         clearButtonEnabled: Boolean,
         clearButtonIcon: Int,
-        addEditStart: String = ""
+        addEditStart: String
     ) {
         this.clearButtonEnabled = clearButtonEnabled
         this.clearButtonIcon = ContextCompat.getDrawable(context, clearButtonIcon)
