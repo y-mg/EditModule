@@ -18,7 +18,18 @@ import com.ymg.editmodule.R
 
 
 
+/**
+ * @author y-mg
+ *
+ * 이것은 클리어 버튼을 설정할 수 있는 EditText 입니다.
+ * This is EditText where you can set the Clear button.
+ */
 class ClearEditView : TextInputEditText, TextWatcher, View.OnTouchListener {
+
+    private var onTouchListener: OnTouchListener? = null
+    private var clearButtonIcon: Drawable? = null
+
+
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -38,14 +49,6 @@ class ClearEditView : TextInputEditText, TextWatcher, View.OnTouchListener {
 
 
 
-    // 터치 리스너
-    private var onTouchListener: OnTouchListener? = null
-
-    // 클리어 버튼 Drawable
-    private var clearButtonIcon: Drawable? = null
-
-
-
     private fun init(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) {
         val typedArray =
             context.theme?.obtainStyledAttributes(
@@ -55,7 +58,8 @@ class ClearEditView : TextInputEditText, TextWatcher, View.OnTouchListener {
                 defStyleAttr
             )
 
-        // 클리어 버튼 아이콘
+        // 클리어 버튼 아이콘을 설정한다.
+        // Set the clear button icon.
         val clearButtonIcon =
             typedArray?.getResourceId(
                 R.styleable.ClearEditStyle_ceClearButtonIcon,
@@ -64,26 +68,23 @@ class ClearEditView : TextInputEditText, TextWatcher, View.OnTouchListener {
 
         typedArray?.recycle()
 
-        clearButtonIcon?.let {
-            setInit(it)
-        }
+
+        setInit(clearButtonIcon ?: R.drawable.btn_clear)
     }
 
 
 
     /**
-     * 설정
+     * Setting Init
      */
     @SuppressLint("ClickableViewAccessibility")
     private fun setInit(
         clearButtonIcon: Int
     ) {
-        ContextCompat.getDrawable(context, clearButtonIcon)?.let {
-            this.clearButtonIcon = it
-        }
+        this.clearButtonIcon = ContextCompat.getDrawable(context, clearButtonIcon)
 
 
-        // 이미지 그리기
+        // Bound Clear Icon
         this.clearButtonIcon?.let {
             it.setBounds(
                 0,
@@ -93,27 +94,24 @@ class ClearEditView : TextInputEditText, TextWatcher, View.OnTouchListener {
             )
         }
 
+        // Setting Default, Action
+        setDefault()
+        setAction()
 
-        // Edit 기본 설정, Edit Action 설정
-        setDefaultClearEditView()
-        setActionClearEditView()
+        // Setting Visible
+        setVisible(false)
 
-        // 클리어 버튼 아이콘 가시성 설정
-        setClearButtonIconVisible(false)
-
-        // 리스너 설정
+        // Setting Listener
         super.setOnTouchListener(this)
         addTextChangedListener(this)
     }
 
 
 
-
-
     /**
-     * 기본 설정
+     * Setting Default
      */
-    private fun setDefaultClearEditView() {
+    private fun setDefault() {
         this.apply {
             minHeight = context.resources.getDimension(R.dimen.clear_edit_default_min_height).toInt()
         }
@@ -122,12 +120,12 @@ class ClearEditView : TextInputEditText, TextWatcher, View.OnTouchListener {
 
 
     /**
-     * 소프트 키보드 Action
+     * Setting Action
      */
-    private fun setActionClearEditView() {
+    private fun setAction() {
         this.setOnEditorActionListener {  _, actionId, _ ->
             when (actionId) {
-                // DONE 버튼
+                // Action Done
                 EditorInfo.IME_ACTION_DONE -> {
                     val inputMethodManager: InputMethodManager =
                         context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -136,7 +134,7 @@ class ClearEditView : TextInputEditText, TextWatcher, View.OnTouchListener {
                     false
                 }
 
-                // NEXT 버튼
+                // Action Next
                 EditorInfo.IME_ACTION_NEXT -> {
                     this.clearFocus()
                     false
@@ -152,9 +150,9 @@ class ClearEditView : TextInputEditText, TextWatcher, View.OnTouchListener {
 
 
     /**
-     * 클리어 버튼 가시성 설정
+     * Setting Visible
      */
-    private fun setClearButtonIconVisible(visible: Boolean) {
+    private fun setVisible(visible: Boolean) {
         clearButtonIcon?.setVisible(visible, false)
 
         when (visible && isFocused) {
@@ -171,18 +169,18 @@ class ClearEditView : TextInputEditText, TextWatcher, View.OnTouchListener {
 
 
     /**
-     * 입력창 포커스
+     * Setting Focus
      */
     override fun onFocusChanged(hasFocus: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
         super.onFocusChanged(hasFocus, direction, previouslyFocusedRect)
 
         when (hasFocus) {
             true -> {
-                setClearButtonIconVisible(!text.isNullOrEmpty())
+                setVisible(!text.isNullOrEmpty())
             }
 
             else -> {
-                setClearButtonIconVisible(false)
+                setVisible(false)
             }
         }
     }
@@ -190,7 +188,7 @@ class ClearEditView : TextInputEditText, TextWatcher, View.OnTouchListener {
 
 
     /**
-     * 터치
+     * Setting Touch
      */
     override fun setOnTouchListener(onTouchListener: OnTouchListener) {
         this.onTouchListener = onTouchListener
@@ -225,7 +223,7 @@ class ClearEditView : TextInputEditText, TextWatcher, View.OnTouchListener {
 
 
     /**
-     * 입력값 변경
+     * Setting Text Watcher
      */
     override fun onTextChanged(
         s: CharSequence,
@@ -234,7 +232,7 @@ class ClearEditView : TextInputEditText, TextWatcher, View.OnTouchListener {
         count: Int
     ) {
         if (isFocused) {
-            setClearButtonIconVisible(s.isNotEmpty())
+            setVisible(s.isNotEmpty())
         }
     }
 
@@ -245,7 +243,7 @@ class ClearEditView : TextInputEditText, TextWatcher, View.OnTouchListener {
 
 
     /**
-     * 백 버튼 시 포커스 제거
+     * Setting Back Key
      */
     override fun onKeyPreIme(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -258,7 +256,7 @@ class ClearEditView : TextInputEditText, TextWatcher, View.OnTouchListener {
 
 
     /**
-     * 제안 거부
+     * Setting Suggestion Disable
      */
     override fun isSuggestionsEnabled(): Boolean {
         return false

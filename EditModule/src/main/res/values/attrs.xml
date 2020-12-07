@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Clear Edit -->
+    <!-- ClearEditView -->
     <declare-styleable name="ClearEditStyle">
         <attr name="ceClearButtonIcon" format="reference"/>
     </declare-styleable>
 
 
 
-    <!-- Password Edit -->
+    <!-- PasswordEditView -->
     <declare-styleable name="PasswordEditStyle">
         <attr name="peClearButtonEnabled" format="boolean"/>
         <attr name="peClearButtonIcon" format="reference"/>
-        <attr name="pePasswordShowButtonIcon" format="reference"/>
-        <attr name="pePasswordHideButtonIcon" format="reference"/>
+        <attr name="peShowPasswordButtonIcon" format="reference"/>
+        <attr name="peHidePasswordButtonIcon" format="reference"/>
     </declare-styleable>
 
 
 
-    <!-- Date Of Year Edit -->
+    <!-- DateOfYearEditView -->
     <declare-styleable name="DateOfYearEditStyle">
         <attr name="doyClearButtonEnabled" format="boolean"/>
         <attr name="doyClearButtonIcon" format="reference"/>
@@ -26,7 +26,7 @@
 
 
 
-    <!-- Number Format Edit -->
+    <!-- NumberFormatEditView -->
     <declare-styleable name="NumberFormatEditStyle">
         <attr name="nfClearButtonEnabled" format="boolean"/>
         <attr name="nfClearButtonIcon" format="reference"/>
@@ -35,7 +35,7 @@
 
 
 
-    <!-- Decimal Format Edit -->
+    <!-- DecimalFormatEditView -->
     <declare-styleable name="DecimalFormatEditStyle">
         <attr name="dfClearButtonEnabled" format="boolean"/>
         <attr name="dfClearButtonIcon" format="reference"/>

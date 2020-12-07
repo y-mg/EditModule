@@ -17,7 +17,22 @@ import com.google.android.material.textfield.TextInputEditText
 import com.ymg.editmodule.R
 
 
+
+/**
+ * @author y-mg
+ *
+ * 이것은 비밀번호 보안성을 설정할 수 있는 EditText 입니다.
+ * This is EditText, which allows you to set password security.
+ */
 class PasswordEditView : TextInputEditText {
+
+    private var clearButtonEnabled: Boolean = true
+    private var clearButtonIcon: Drawable? = null
+    private var showPasswordButtonIcon: Drawable? = null
+    private var hidePasswordButtonIcon: Drawable? = null
+    private var passwordVisible: Boolean = false
+
+
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -37,23 +52,6 @@ class PasswordEditView : TextInputEditText {
 
 
 
-    // 클리어 버튼 허용 여부
-    private var clearButtonEnabled: Boolean = true
-
-    // 클리어 버튼 Drawable
-    private var clearButtonIcon: Drawable? = null
-
-    // 비밀번호 보여주기 버튼 Drawable
-    private var passwordShowButtonIcon: Drawable? = null
-
-    // 비밀번호 숨기기 버튼 Drawable
-    private var passwordHideButtonIcon: Drawable? = null
-
-    // 비밀번호 보여주기/숨기기 여부
-    private var passwordVisible: Boolean = false
-
-
-
     private fun init(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) {
         val typedArray =
             context.theme?.obtainStyledAttributes(
@@ -63,71 +61,68 @@ class PasswordEditView : TextInputEditText {
                 defStyleAttr
             )
 
-
-        // 클리어 버튼 허용 여부
+        // 클리어 버튼 사용 여부를 설정한다.
+        // Set whether or not to use the clear button.
         val clearButtonEnabled =
             typedArray?.getBoolean(
                 R.styleable.PasswordEditStyle_peClearButtonEnabled,
                 true
             )
 
-        // 클리어 버튼 아이콘
+        // 클리어 버튼 아이콘을 설정한다.
+        // Set the clear button icon.
         val clearButtonIcon =
             typedArray?.getResourceId(
                 R.styleable.PasswordEditStyle_peClearButtonIcon,
                 R.drawable.btn_clear
             )
 
-        // 비밀번호 보여주기 아이콘
-        val passwordShowButtonIcon =
+        // 비밀번호 보이기 버튼 아이콘을 설정한다.
+        // Set the Show Password button icon.
+        val showPasswordButtonIcon =
             typedArray?.getResourceId(
-                R.styleable.PasswordEditStyle_pePasswordShowButtonIcon,
+                R.styleable.PasswordEditStyle_peShowPasswordButtonIcon,
                 R.drawable.btn_password_show
             )
 
-        // 비밀번호 숨기기 아이콘
-        val passwordHideButtonIcon =
+        // 비밀번호 숨기기 버튼 아이콘을 설정한다.
+        // Set the Hide Password button icon.
+        val hidePasswordButtonIcon =
             typedArray?.getResourceId(
-                R.styleable.PasswordEditStyle_pePasswordHideButtonIcon,
-                R.drawable.btn_password_show
+                R.styleable.PasswordEditStyle_peHidePasswordButtonIcon,
+                R.drawable.btn_password_hide
             )
 
         typedArray?.recycle()
 
 
-        if (clearButtonEnabled != null && clearButtonIcon != null && passwordShowButtonIcon != null && passwordHideButtonIcon != null) {
-            setInit(clearButtonEnabled, clearButtonIcon, passwordShowButtonIcon, passwordHideButtonIcon)
-        }
+        setInit(
+            clearButtonEnabled = clearButtonEnabled ?: true,
+            clearButtonIcon = clearButtonIcon ?: R.drawable.btn_clear,
+            showPasswordButtonIcon = showPasswordButtonIcon ?: R.drawable.btn_password_show,
+            hidePasswordButtonIcon = hidePasswordButtonIcon ?: R.drawable.btn_password_hide,
+        )
     }
 
 
 
     /**
-     * 설정
+     * Setting Init
      */
     @SuppressLint("ClickableViewAccessibility")
     private fun setInit(
         clearButtonEnabled: Boolean,
         clearButtonIcon: Int,
-        passwordShowButtonIcon: Int,
-        passwordHideButtonIcon: Int
+        showPasswordButtonIcon: Int,
+        hidePasswordButtonIcon: Int
     ) {
         this.clearButtonEnabled = clearButtonEnabled
-
-        ContextCompat.getDrawable(context, clearButtonIcon)?.let {
-            this.clearButtonIcon = it
-        }
-
-        ContextCompat.getDrawable(context, passwordShowButtonIcon)?.let {
-            this.passwordShowButtonIcon = it
-        }
-
-        ContextCompat.getDrawable(context, passwordHideButtonIcon)?.let {
-            this.passwordHideButtonIcon = it
-        }
+        this.clearButtonIcon = ContextCompat.getDrawable(context, clearButtonIcon)
+        this.showPasswordButtonIcon = ContextCompat.getDrawable(context, showPasswordButtonIcon)
+        this.hidePasswordButtonIcon = ContextCompat.getDrawable(context, hidePasswordButtonIcon)
 
 
-        // 이미지 그리기
+        // Bound Clear Icon
         this.clearButtonIcon?.let {
             it.setBounds(
                 0,
@@ -137,7 +132,8 @@ class PasswordEditView : TextInputEditText {
             )
         }
 
-        this.passwordShowButtonIcon?.let {
+        // Bound Show Password Icon
+        this.showPasswordButtonIcon?.let {
             it.setBounds(
                 0,
                 0,
@@ -146,7 +142,8 @@ class PasswordEditView : TextInputEditText {
             )
         }
 
-        this.passwordHideButtonIcon?.let {
+        // Bound Hide Password Icon
+        this.hidePasswordButtonIcon?.let {
             it.setBounds(
                 0,
                 0,
@@ -155,20 +152,17 @@ class PasswordEditView : TextInputEditText {
             )
         }
 
-
-        // Edit 기본 설정, Edit Action 설정
-        setDefaultPasswordEditView()
-        setActionPasswordEditView()
+        // Setting Default, Action
+        setDefault()
+        setAction()
     }
 
 
 
-
-
     /**
-     * 기본 설정
+     * Setting Default
      */
-    private fun setDefaultPasswordEditView() {
+    private fun setDefault() {
         this.apply {
             minHeight = context.resources.getDimension(R.dimen.password_edit_default_min_height).toInt()
             inputType = InputType.TYPE_CLASS_TEXT
@@ -176,13 +170,15 @@ class PasswordEditView : TextInputEditText {
         }
     }
 
+
+
     /**
-     * 소프트 키보드 Action
+     * Setting Action
      */
-    private fun setActionPasswordEditView() {
+    private fun setAction() {
         this.setOnEditorActionListener {  _, actionId, _ ->
             when (actionId) {
-                // DONE 버튼
+                // Action Done
                 EditorInfo.IME_ACTION_DONE -> {
                     val inputMethodManager: InputMethodManager =
                         context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -191,7 +187,7 @@ class PasswordEditView : TextInputEditText {
                     false
                 }
 
-                // NEXT 버튼
+                // Action Next
                 EditorInfo.IME_ACTION_NEXT -> {
                     this.clearFocus()
                     false
@@ -207,32 +203,32 @@ class PasswordEditView : TextInputEditText {
 
 
     /**
-     * 아이콘 그리기
+     * Setting Draw Icon
      */
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         if (isFocused && text.toString().isNotEmpty() && clearButtonEnabled) {
-            setDrawClearIcon(canvas)
+            onDrawClearIcon(canvas)
         }
 
         if (isFocused && text.toString().isNotEmpty()) {
             when (passwordVisible) {
                 true -> {
-                    setDrawPasswordShowIcon(canvas)
+                    onDrawPasswordShowIcon(canvas)
                 }
 
                 false -> {
-                    setDrawPasswordHideIcon(canvas)
+                    onDrawPasswordHideIcon(canvas)
                 }
             }
         }
     }
 
     /**
-     * 클리어 아이콘 그리기 설정
+     * Draw Clear Icon
      */
-    private fun setDrawClearIcon(canvas: Canvas) {
+    private fun onDrawClearIcon(canvas: Canvas) {
         clearButtonIcon?.let {
             canvas.save()
             canvas.translate(
@@ -246,10 +242,10 @@ class PasswordEditView : TextInputEditText {
     }
 
     /**
-     * 비밀번호 보여주기 아이콘 그리기 설정
+     * Draw Show Password Icon
      */
-    private fun setDrawPasswordShowIcon(canvas: Canvas) {
-        passwordShowButtonIcon?.let {
+    private fun onDrawPasswordShowIcon(canvas: Canvas) {
+        showPasswordButtonIcon?.let {
             canvas.save()
 
             when (clearButtonEnabled) {
@@ -274,10 +270,10 @@ class PasswordEditView : TextInputEditText {
     }
 
     /**
-     * 비밀번호 숨기기 아이콘 그리기 설정
+     * Draw Hide Password Icon
      */
-    private fun setDrawPasswordHideIcon(canvas: Canvas) {
-        passwordHideButtonIcon?.let {
+    private fun onDrawPasswordHideIcon(canvas: Canvas) {
+        hidePasswordButtonIcon?.let {
             canvas.save()
 
             when (clearButtonEnabled) {
@@ -304,7 +300,7 @@ class PasswordEditView : TextInputEditText {
 
 
     /**
-     * 터치 이벤트
+     * Setting Touch
      */
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -370,7 +366,7 @@ class PasswordEditView : TextInputEditText {
 
 
     /**
-     * 백 버튼 시 포커스 제거
+     * Setting Back Key
      */
     override fun onKeyPreIme(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -383,7 +379,7 @@ class PasswordEditView : TextInputEditText {
 
 
     /**
-     * 제안 거부
+     * Setting Suggestion Disable
      */
     override fun isSuggestionsEnabled(): Boolean {
         return false

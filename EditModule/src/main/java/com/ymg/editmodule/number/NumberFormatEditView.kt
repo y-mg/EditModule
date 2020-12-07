@@ -19,7 +19,23 @@ import java.text.NumberFormat
 
 
 
+/**
+ * @author y-mg
+ *
+ * 이것은 정수를 천 단위일 때마다 "," 로 분리하는 EditText 입니다.
+ * This is a EditText that separates the integer into "," every thousand units.
+ */
 class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
+
+    private var onTouchListener: OnTouchListener? = null
+    private var clearButtonEnabled: Boolean = true
+    private var clearButtonIcon: Drawable? = null
+    private var addEditStart: String = ""
+
+    // Check Formatting
+    private var isFormatting = false
+
+
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -39,23 +55,6 @@ class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
 
 
 
-    // 터치 리스너
-    private var onTouchListener: OnTouchListener? = null
-
-    // 클리어 버튼 허용 여부
-    private var clearButtonEnabled: Boolean = true
-
-    // 클리어 버튼 Drawable
-    private var clearButtonIcon: Drawable? = null
-
-    // Edit 앞에 붙일 텍스트
-    private var addEditStart: String = ""
-
-    // 포맷팅 여부
-    private var isFormatting = false
-
-
-
     private fun init(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) {
         val typedArray =
             context.theme?.obtainStyledAttributes(
@@ -65,22 +64,24 @@ class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
                 defStyleAttr
             )
 
-
-        // 클리어 버튼 허용 여부
+        // 클리어 버튼 사용 여부를 설정한다.
+        // Set whether or not to use the clear button.
         val clearButtonEnabled =
             typedArray?.getBoolean(
                 R.styleable.NumberFormatEditStyle_nfClearButtonEnabled,
                 true
             )
 
-        // 클리어 버튼 아이콘
+        // 클리어 버튼 아이콘을 설정한다.
+        // Set the clear button icon.
         val clearButtonIcon =
             typedArray?.getResourceId(
                 R.styleable.NumberFormatEditStyle_nfClearButtonIcon,
                 R.drawable.btn_clear
             )
 
-        // Edit 앞에 붙일 값
+        // 맨 앞에 문자열을 추가한다.
+        // Add a string to the beginning.
         val addEditStart =
             typedArray?.getString(
                 R.styleable.NumberFormatEditStyle_nfAddEditStart
@@ -89,23 +90,17 @@ class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
         typedArray?.recycle()
 
 
-        if (clearButtonEnabled != null && clearButtonIcon != null) {
-            when {
-                !addEditStart.isNullOrEmpty() -> {
-                    setInit(clearButtonEnabled, clearButtonIcon, addEditStart)
-                }
-
-                else -> {
-                    setInit(clearButtonEnabled, clearButtonIcon)
-                }
-            }
-        }
+        setInit(
+            clearButtonEnabled = clearButtonEnabled ?: true,
+            clearButtonIcon = clearButtonIcon ?: R.drawable.btn_clear,
+            addEditStart = addEditStart ?: "",
+        )
     }
 
 
 
     /**
-     * 설정
+     * Setting Init
      */
     @SuppressLint("ClickableViewAccessibility")
     private fun setInit(
@@ -114,13 +109,10 @@ class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
         addEditStart: String = ""
     ) {
         this.clearButtonEnabled = clearButtonEnabled
-
-        ContextCompat.getDrawable(context, clearButtonIcon)?.let {
-            this.clearButtonIcon = it
-        }
+        this.clearButtonIcon = ContextCompat.getDrawable(context, clearButtonIcon)
 
 
-        // 이미지 그리기
+        // Bound Clear Icon
         this.clearButtonIcon?.let {
             it.setBounds(
                 0,
@@ -130,21 +122,20 @@ class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
             )
         }
 
+        // Setting Default, Action
+        setDefault()
+        setAction()
 
-        // Edit 기본 설정, Edit Action 설정
-        setDefaultNumberFormatEditView()
-        setActionNumberFormatEditView()
-
-        // Edit 앞에 붙일 값 설정
+        // Setting AddEditStart
         setAddEditStart(addEditStart)
 
-        // 클리어 버튼 아이콘 가시성 설정
-        setClearButtonIconVisible(false)
+        // Setting Visible
+        setVisible(false)
 
-        // 리스너 설정
+        // Setting Listener
         super.setOnTouchListener(this)
 
-        // TextChanges RxBind
+        // Setting Text Watcher
         this.textChanges()
             .filter {
                 !isFormatting
@@ -169,7 +160,7 @@ class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
                 this.setSelection(it.length)
 
                 if (isFocused) {
-                    setClearButtonIconVisible(it.isNotEmpty())
+                    setVisible(it.isNotEmpty())
                 }
 
                 isFormatting = false
@@ -178,25 +169,25 @@ class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
 
 
 
-
-
     /**
-     * 기본 설정
+     * Setting Default
      */
-    private fun setDefaultNumberFormatEditView() {
+    private fun setDefault() {
         this.apply {
             minHeight = context.resources.getDimension(R.dimen.number_format_edit_default_min_height).toInt()
             inputType = InputType.TYPE_CLASS_NUMBER
         }
     }
 
+
+
     /**
-     * 소프트 키보드 Action
+     * Setting Action
      */
-    private fun setActionNumberFormatEditView() {
+    private fun setAction() {
         this.setOnEditorActionListener {  _, actionId, _ ->
             when (actionId) {
-                // DONE 버튼
+                // Action Done
                 EditorInfo.IME_ACTION_DONE -> {
                     val inputMethodManager: InputMethodManager =
                         context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -205,7 +196,7 @@ class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
                     false
                 }
 
-                // NEXT 버튼
+                // Action Next
                 EditorInfo.IME_ACTION_NEXT -> {
                     this.clearFocus()
                     false
@@ -221,7 +212,10 @@ class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
 
 
     /**
-     * Edit 앞에 붙일 값 설정
+     * - 맨 앞에 문자열을 추가한다.
+     * - Add a string to the beginning.
+     *
+     * @param addEditStart -> Value to be added first
      */
     fun setAddEditStart(addEditStart: String) {
         this.addEditStart = addEditStart
@@ -230,9 +224,9 @@ class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
 
 
     /**
-     * 클리어 버튼 가시성 설정
+     * Setting Visible
      */
-    private fun setClearButtonIconVisible(visible: Boolean) {
+    private fun setVisible(visible: Boolean) {
         clearButtonIcon?.setVisible(visible, false)
 
         when (visible && clearButtonEnabled && isFocused) {
@@ -249,18 +243,18 @@ class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
 
 
     /**
-     * 입력창 포커스
+     * Setting Focus
      */
     override fun onFocusChanged(hasFocus: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
         super.onFocusChanged(hasFocus, direction, previouslyFocusedRect)
 
         when (hasFocus) {
             true -> {
-                setClearButtonIconVisible(!text.isNullOrEmpty())
+                setVisible(!text.isNullOrEmpty())
             }
 
             else -> {
-                setClearButtonIconVisible(false)
+                setVisible(false)
             }
         }
     }
@@ -268,7 +262,7 @@ class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
 
 
     /**
-     * 터치
+     * Setting Touch
      */
     override fun setOnTouchListener(onTouchListener: OnTouchListener) {
         this.onTouchListener = onTouchListener
@@ -304,7 +298,7 @@ class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
 
 
     /**
-     * 백 버튼 시 포커스 제거
+     * Setting Back Key
      */
     override fun onKeyPreIme(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -317,7 +311,7 @@ class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
 
 
     /**
-     * 제안 거부
+     * Setting Suggestion Disable
      */
     override fun isSuggestionsEnabled(): Boolean {
         return false
@@ -326,7 +320,8 @@ class NumberFormatEditView : TextInputEditText, View.OnTouchListener {
 
 
     /**
-     * 입력 값 가져오기
+     * - 오직 정수 값을 가져온다.
+     * - Only take a integer value.
      */
     fun getFormatText(): String {
         return this.text.toString().replace("[^\\d]".toRegex(), "")

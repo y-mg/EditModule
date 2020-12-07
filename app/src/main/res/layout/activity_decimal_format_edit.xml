@@ -16,7 +16,7 @@
         android:imeOptions="actionDone"
         app:dfClearButtonEnabled="true"
         app:dfClearButtonIcon="@drawable/icon_clear"
-        app:dfNumberCut="30"
+        app:dfNumberCut="10"
         app:dfDecimalCut="6"
         app:dfAddEditStart="코인: "
         app:layout_constraintBottom_toBottomOf="parent"

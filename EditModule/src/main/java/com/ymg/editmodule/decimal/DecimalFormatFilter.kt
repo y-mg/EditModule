@@ -7,6 +7,13 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 
+
+/**
+ * @author y-mg
+ *
+ * 입력 필터를 설정한다.
+ * Set the input filter.
+ */
 class DecimalFormatFilter(
     numberCut: Int,
     decimalCut: Int
