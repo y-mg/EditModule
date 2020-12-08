@@ -29,6 +29,7 @@ import com.ymg.editmodule.R
 class DateOfYearEditView : TextInputEditText, View.OnTouchListener {
 
     private var onTouchListener: OnTouchListener? = null
+
     private var clearButtonEnabled: Boolean = true
     private var clearButtonIcon: Drawable? = null
 
@@ -64,7 +65,7 @@ class DateOfYearEditView : TextInputEditText, View.OnTouchListener {
                 defStyleAttr
             )
 
-        // 클리어 버튼 사용 여부를 설정한다.
+        // 클리어 버튼의 사용 여부를 설정한다.
         // Set whether or not to use the clear button.
         val clearButtonEnabled =
             typedArray?.getBoolean(
@@ -72,8 +73,8 @@ class DateOfYearEditView : TextInputEditText, View.OnTouchListener {
                 true
             )
 
-        // 클리어 버튼 아이콘을 설정한다.
-        // Set the clear button icon.
+        // 클리어 버튼의 아이콘을 설정한다.
+        // Set the icon for the clear button.
         val clearButtonIcon =
             typedArray?.getResourceId(
                 R.styleable.DateOfYearEditStyle_doyClearButtonIcon,

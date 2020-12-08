@@ -61,7 +61,7 @@ class PasswordEditView : TextInputEditText {
                 defStyleAttr
             )
 
-        // 클리어 버튼 사용 여부를 설정한다.
+        // 클리어 버튼의 사용 여부를 설정한다.
         // Set whether or not to use the clear button.
         val clearButtonEnabled =
             typedArray?.getBoolean(
@@ -69,24 +69,24 @@ class PasswordEditView : TextInputEditText {
                 true
             )
 
-        // 클리어 버튼 아이콘을 설정한다.
-        // Set the clear button icon.
+        // 클리어 버튼의 아이콘을 설정한다.
+        // Set the icon for the clear button.
         val clearButtonIcon =
             typedArray?.getResourceId(
                 R.styleable.PasswordEditStyle_peClearButtonIcon,
                 R.drawable.btn_clear
             )
 
-        // 비밀번호 보이기 버튼 아이콘을 설정한다.
-        // Set the Show Password button icon.
+        // 비밀번호 보이기 버튼의 아이콘을 설정한다.
+        // Set the icon for the Show Password button.
         val showPasswordButtonIcon =
             typedArray?.getResourceId(
                 R.styleable.PasswordEditStyle_peShowPasswordButtonIcon,
                 R.drawable.btn_password_show
             )
 
-        // 비밀번호 숨기기 버튼 아이콘을 설정한다.
-        // Set the Hide Password button icon.
+        // 비밀번호 숨기기 버튼의 아이콘을 설정한다.
+        // Set the icon for the Hide Password button.
         val hidePasswordButtonIcon =
             typedArray?.getResourceId(
                 R.styleable.PasswordEditStyle_peHidePasswordButtonIcon,

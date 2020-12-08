@@ -27,6 +27,7 @@ import java.text.NumberFormat
 class DecimalFormatEditView : TextInputEditText, View.OnTouchListener {
 
     private var onTouchListener: OnTouchListener? = null
+
     private var clearButtonEnabled: Boolean = true
     private var clearButtonIcon: Drawable? = null
     private var addEditStart: String = ""
@@ -63,7 +64,7 @@ class DecimalFormatEditView : TextInputEditText, View.OnTouchListener {
                 defStyleAttr
             )
 
-        // 클리어 버튼 사용 여부를 설정한다.
+        // 클리어 버튼의 사용 여부를 설정한다.
         // Set whether or not to use the clear button.
         val clearButtonEnabled =
             typedArray?.getBoolean(
@@ -71,15 +72,15 @@ class DecimalFormatEditView : TextInputEditText, View.OnTouchListener {
                 true
             )
 
-        // 클리어 버튼 아이콘을 설정한다.
-        // Set the clear button icon.
+        // 클리어 버튼의 아이콘을 설정한다.
+        // Set the icon for the clear button.
         val clearButtonIcon =
             typedArray?.getResourceId(
                 R.styleable.DecimalFormatEditStyle_dfClearButtonIcon,
                 R.drawable.btn_clear
             )
 
-        // 정수 자릿수이다.
+        // 정수의 자릿수이다.
         // It's an integer number.
         val numberCut =
             typedArray?.getInteger(

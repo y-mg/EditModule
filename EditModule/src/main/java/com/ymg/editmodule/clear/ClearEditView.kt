@@ -27,6 +27,7 @@ import com.ymg.editmodule.R
 class ClearEditView : TextInputEditText, TextWatcher, View.OnTouchListener {
 
     private var onTouchListener: OnTouchListener? = null
+
     private var clearButtonIcon: Drawable? = null
 
 
@@ -58,8 +59,8 @@ class ClearEditView : TextInputEditText, TextWatcher, View.OnTouchListener {
                 defStyleAttr
             )
 
-        // 클리어 버튼 아이콘을 설정한다.
-        // Set the clear button icon.
+        // 클리어 버튼의 아이콘을 설정한다.
+        // Set the icon for the clear button.
         val clearButtonIcon =
             typedArray?.getResourceId(
                 R.styleable.ClearEditStyle_ceClearButtonIcon,

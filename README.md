@@ -23,8 +23,8 @@
     app:ceClearButtonIcon="@drawable/icon_clear" />
 ```
 - app:ceClearButtonIcon
-    - 클리어 버튼 아이콘을 설정한다.
-    - Set the clear button icon.
+    - 클리어의 버튼 아이콘을 설정한다.
+    - Set the icon for the clear button.
 
 - inputType and imeOptions
     - 이 옵션을 적용하는 것을 추천합니다.
@@ -54,20 +54,20 @@
     app:peHidePasswordButtonIcon="@drawable/icon_hide" />
 ```
 - app:peClearButtonEnabled
-    - 클리어 버튼 사용 여부를 설정한다.
+    - 클리어 버튼의 사용 여부를 설정한다.
     - Set whether or not to use the clear button.
 
 - app:peClearButtonIcon
-    - 클리어 버튼 아이콘을 설정한다.
-    - Set the clear button icon.
+    - 클리어 버튼의 아이콘을 설정한다.
+    - Set the icon for the clear button.
 
 - app:peShowPasswordButtonIcon
-    - 비밀번호 보이기 버튼 아이콘을 설정한다.
-    - Set the Show Password button icon.
+    - 비밀번호 보이기 버튼의 아이콘을 설정한다.
+    - Set the icon for the Show Password button.
 
 - app:peHidePasswordButtonIcon
-    - 비밀번호 숨기기 버튼 아이콘을 설정한다.
-    - Set the Hide Password button icon.
+    - 비밀번호 숨기기 버튼의 아이콘을 설정한다.
+    - Set the icon for the Hide Password button.
 
 - imeOptions and maxLength
     - 이 옵션을 적용하는 것을 추천합니다.
@@ -94,12 +94,12 @@
     app:doyClearButtonIcon="@drawable/icon_clear" />
 ```
 - app:doyClearButtonEnabled
-    - 클리어 버튼 사용 여부를 설정한다.
+    - 클리어 버튼의 사용 여부를 설정한다.
     - Set whether or not to use the clear button.
 
 - app:doyClearButtonIcon
-    - 클리어 버튼 아이콘을 설정한다.
-    - Set the clear button icon.
+    - 클리어 버튼의 아이콘을 설정한다.
+    - Set the icon for the clear button.
 
 - imeOptions
     - 이 옵션을 적용하는 것을 추천합니다.
@@ -127,12 +127,12 @@
     app:nfAddEditStart="$"/>
 ```
 - app:nfClearButtonEnabled
-    - 클리어 버튼 사용 여부를 설정한다.
+    - 클리어 버튼의 사용 여부를 설정한다.
     - Set whether or not to use the clear button.
 
 - app:nfClearButtonIcon
-    - 클리어 버튼 아이콘을 설정한다.
-    - Set the clear button icon.
+    - 클리어 버튼의 아이콘을 설정한다.
+    - Set the icon for the clear button.
 
 - app:nfAddEditStart
     - 맨 앞에 문자열을 추가한다.
@@ -187,15 +187,15 @@ fun getFormatText()
     app:dfAddEditStart="코인: "/>
 ```
 - app:dfClearButtonEnabled
-    - 클리어 버튼 사용 여부를 설정한다.
+    - 클리어 버튼의 사용 여부를 설정한다.
     - Set whether or not to use the clear button.
 
 - app:dfClearButtonIcon
-    - 클리어 버튼 아이콘을 설정한다.
-    - Set the clear button icon.
+    - 클리어 버튼의 아이콘을 설정한다.
+    - Set the icon for the clear button.
 
 - app:dfNumberCut
-    - 정수 자릿수이다.
+    - 정수의 자릿수이다.
     - It's an integer number.
 
 - app:dfDecimalCut
