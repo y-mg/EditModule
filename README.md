@@ -6,6 +6,30 @@
 
 
 
+## Install
+[![](https://jitpack.io/v/y-mg/editmodule.svg)](https://jitpack.io/#y-mg/editmodule)
+
+Add Jitpack to your repositories in your `build.gradle` file
+
+```groovy
+allprojects {
+    repositories {
+      // ...
+      maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+Add the below to your dependencies, again in your gradle.build file
+
+```groovy
+implementation 'com.github.y-mg:editmodule:{version}'
+```
+<br/>
+<br/>
+
+
+
 ## 1. ClearEditView
 
 > 이것은 클리어 버튼을 설정할 수 있는 EditText 입니다.<br/>
@@ -22,11 +46,11 @@
     android:imeOptions="actionDone"
     app:ceClearButtonIcon="@drawable/icon_clear" />
 ```
-- app:ceClearButtonIcon
+- `app:ceClearButtonIcon`
     - 클리어의 버튼 아이콘을 설정한다.
     - Set the icon for the clear button.
 
-- inputType and imeOptions
+- `inputType` and `imeOptions`
     - 이 옵션을 적용하는 것을 추천합니다.
     - It is recommended to apply options.
 <br/>
@@ -53,23 +77,23 @@
     app:peShowPasswordButtonIcon="@drawable/icon_show"
     app:peHidePasswordButtonIcon="@drawable/icon_hide" />
 ```
-- app:peClearButtonEnabled
+- `app:peClearButtonEnabled`
     - 클리어 버튼의 사용 여부를 설정한다.
     - Set whether or not to use the clear button.
 
-- app:peClearButtonIcon
+- `app:peClearButtonIcon`
     - 클리어 버튼의 아이콘을 설정한다.
     - Set the icon for the clear button.
 
-- app:peShowPasswordButtonIcon
+- `app:peShowPasswordButtonIcon`
     - 비밀번호 보이기 버튼의 아이콘을 설정한다.
     - Set the icon for the Show Password button.
 
-- app:peHidePasswordButtonIcon
+- `app:peHidePasswordButtonIcon`
     - 비밀번호 숨기기 버튼의 아이콘을 설정한다.
     - Set the icon for the Hide Password button.
 
-- imeOptions and maxLength
+- `imeOptions` and `maxLength`
     - 이 옵션을 적용하는 것을 추천합니다.
     - It is recommended to apply options.
 <br/>
@@ -93,15 +117,15 @@
     app:doyClearButtonEnabled=true
     app:doyClearButtonIcon="@drawable/icon_clear" />
 ```
-- app:doyClearButtonEnabled
+- `app:doyClearButtonEnabled`
     - 클리어 버튼의 사용 여부를 설정한다.
     - Set whether or not to use the clear button.
 
-- app:doyClearButtonIcon
+- `app:doyClearButtonIcon`
     - 클리어 버튼의 아이콘을 설정한다.
     - Set the icon for the clear button.
 
-- imeOptions
+- `imeOptions`
     - 이 옵션을 적용하는 것을 추천합니다.
     - It is recommended to apply options.
 <br/>
@@ -126,19 +150,19 @@
     app:nfClearButtonIcon="@drawable/icon_clear"
     app:nfAddEditStart="$"/>
 ```
-- app:nfClearButtonEnabled
+- `app:nfClearButtonEnabled`
     - 클리어 버튼의 사용 여부를 설정한다.
     - Set whether or not to use the clear button.
 
-- app:nfClearButtonIcon
+- `app:nfClearButtonIcon`
     - 클리어 버튼의 아이콘을 설정한다.
     - Set the icon for the clear button.
 
-- app:nfAddEditStart
+- `app:nfAddEditStart`
     - 맨 앞에 문자열을 추가한다.
     - Add a string to the beginning.
 
-- imeOptions
+- `imeOptions`
     - 이 옵션을 적용하는 것을 추천합니다.
     - It is recommended to apply options.
 
@@ -186,27 +210,27 @@ fun getFormatText()
     app:dfDecimalCut="6"
     app:dfAddEditStart="코인: "/>
 ```
-- app:dfClearButtonEnabled
+- `app:dfClearButtonEnabled`
     - 클리어 버튼의 사용 여부를 설정한다.
     - Set whether or not to use the clear button.
 
-- app:dfClearButtonIcon
+- `app:dfClearButtonIcon`
     - 클리어 버튼의 아이콘을 설정한다.
     - Set the icon for the clear button.
 
-- app:dfNumberCut
+- `app:dfNumberCut`
     - 정수의 자릿수이다.
     - It's an integer number.
 
-- app:dfDecimalCut
+- `app:dfDecimalCut`
     - 소수점 이하 자릿수이다.
     - It's a decimal place.
 
-- app:dfAddEditStart
+- `app:dfAddEditStart`
     - 맨 앞에 문자열을 추가한다.
     - Add a string to the beginning.
 
-- imeOptions
+- `imeOptions`
     - 이 옵션을 적용하는 것을 추천합니다.
     - It is recommended to apply options.
 
